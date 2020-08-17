@@ -9,6 +9,19 @@
     <script src="//unpkg.com/socket.io-client@^2.3.0/dist/socket.io.js"></script>
     <script>
       const socket = io();
+      const app = feathers();
+
+      app.configure(feathers.socketio(socket));
+
+      async function sendMessage() {
+        const messageInput = document.getElementById('message-text');
+
+        await app.service('messages').create({
+          text: messageInput.value,
+        });
+        console.log('Hello world');
+        messageInput.value = '';
+      }
     </script>
     <link rel="stylesheet" href="//unpkg.com/feathers-chat@4.0.0/public/base.css" />
     <link rel="stylesheet" href="//unpkg.com/feathers-chat@4.0.0/public/chat.css" />
